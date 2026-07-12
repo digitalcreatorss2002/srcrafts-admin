@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>API Route Endpoints Documentation</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="api-route-endpoints-documentation">API Route Endpoints Documentation</h1>
+<p>This document maps frontend routes to their corresponding API endpoints and describes the data flow.</p>
+<hr>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#authentication-endpoints">Authentication Endpoints</a></li>
+<li><a href="#product-endpoints">Product Endpoints</a></li>
+<li><a href="#category-endpoints">Category Endpoints</a></li>
+<li><a href="#order-endpoints">Order Endpoints</a></li>
+<li><a href="#customer-endpoints">Customer Endpoints</a></li>
+<li><a href="#vendor-endpoints">Vendor Endpoints</a></li>
+<li><a href="#content-management-endpoints">Content Management Endpoints</a></li>
+<li><a href="#marketing-endpoints">Marketing Endpoints</a></li>
+<li><a href="#common-patterns">Common Patterns</a></li>
+</ol>
+<hr>
+<h2 id="authentication-endpoints">Authentication Endpoints</h2>
+<h3 id="login">Login</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/</code></li>
+<li><strong>API Endpoint</strong>: <code>POST /api/auth/login</code> or <code>POST /api/admin/login</code></li>
+<li><strong>Request Body</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;email&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;admin@example.com&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;password&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;password123&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;token&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;jwt-token-here&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;user&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Admin User&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;email&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;admin@example.com&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;role&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;admin&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="load-user-verify-token">Load User (Verify Token)</h3>
+<ul>
+<li><strong>Frontend Route</strong>: All protected routes</li>
+<li><strong>API Endpoint</strong>: <code>GET /api/auth/user</code> or <code>GET /api/admin/me</code></li>
+<li><strong>Headers</strong>: <code>Authorization: Bearer &lt;token&gt;</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;user&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Admin User&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;email&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;admin@example.com&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;role&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;admin&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="logout">Logout</h3>
+<ul>
+<li><strong>Frontend Route</strong>: Profile menu</li>
+<li><strong>API Endpoint</strong>: <code>POST /api/auth/logout</code> (optional)</li>
+<li><strong>Action</strong>: Remove token from localStorage and Redux store</li>
+</ul>
+<hr>
+<h2 id="product-endpoints">Product Endpoints</h2>
+<h3 id="list-all-products">List All Products</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/products</code></li>
+<li><strong>API Endpoint</strong>: <code>GET /api/products</code></li>
+<li><strong>Query Parameters</strong>:
+<ul>
+<li><code>page</code>: Page number (default: 1)</li>
+<li><code>limit</code>: Items per page (default: 10)</li>
+<li><code>search</code>: Search query</li>
+<li><code>category</code>: Filter by category</li>
+<li><code>vendor</code>: Filter by vendor</li>
+<li><code>status</code>: Filter by status (active/inactive)</li>
+<li><code>sort</code>: Sort field (name, price, createdAt)</li>
+<li><code>order</code>: Sort order (asc/desc)</li>
+</ul>
+</li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Product Name&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;sku&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;SKU-001&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;price&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">99.99</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;vendor&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Vendor Name&quot;</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;category&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Category Name&quot;</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;stock&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">50</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;active&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;pagination&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;currentPage&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;totalPages&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">10</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;totalItems&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">100</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;itemsPerPage&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">10</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="get-single-product">Get Single Product</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/products/:id/view</code></li>
+<li><strong>API Endpoint</strong>: <code>GET /api/products/:id</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Product Name&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Full description&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;sku&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;SKU-001&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;price&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">99.99</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;comparePrice&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">129.99</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;cost&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">50.00</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;vendor&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Vendor Name&quot;</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;categories&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>...<span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;images&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+      <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;url&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;image1.jpg&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;isPrimary&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;url&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;image2.jpg&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;isPrimary&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">false</span> <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;variations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;color&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Red&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;size&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;L&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;sku&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;SKU-001-RED-L&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;stock&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">10</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;price&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">99.99</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;metaTitle&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Product Meta Title&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;metaDescription&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Product Meta Description&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;keywords&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;keyword1&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;keyword2&quot;</span><span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="create-product">Create Product</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/products/add</code></li>
+<li><strong>API Endpoint</strong>: <code>POST /api/products</code></li>
+<li><strong>Request Body</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Product Name&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Product description&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;sku&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;SKU-001&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;price&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">99.99</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;comparePrice&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">129.99</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;cost&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">50.00</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;vendorId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;categoryId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;subCategoryId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;images&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;image1.jpg&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;image2.jpg&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;variations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>...<span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>...<span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;message&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Product created successfully&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span> ... <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="update-product">Update Product</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/products/:id/edit</code></li>
+<li><strong>API Endpoint</strong>: <code>PUT /api/products/:id</code> or <code>PATCH /api/products/:id</code></li>
+<li><strong>Request Body</strong>: Same as create</li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;message&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Product updated successfully&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span> ... <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="delete-product">Delete Product</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/products</code> (via delete button)</li>
+<li><strong>API Endpoint</strong>: <code>DELETE /api/products/:id</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;message&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Product deleted successfully&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="bulk-upload-products">Bulk Upload Products</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/products/bulk-upload</code></li>
+<li><strong>API Endpoint</strong>: <code>POST /api/products/bulk-upload</code></li>
+<li><strong>Request</strong>: Multipart form data with CSV file</li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;message&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Bulk upload completed&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;results&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;total&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">100</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">95</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;failed&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">5</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;errors&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+      <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;row&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">23</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;error&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Invalid SKU&quot;</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;row&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">45</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;error&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Missing required field&quot;</span> <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">]</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="category-endpoints">Category Endpoints</h2>
+<h3 id="main-categories">Main Categories</h3>
+<ul>
+<li><strong>Frontend Routes</strong>: <code>/categorys/*</code></li>
+<li><strong>API Base</strong>: <code>/api/categories</code></li>
+</ul>
+<h3 id="sub-categories-all-levels">Sub Categories (All Levels)</h3>
+<ul>
+<li><strong>Level 1</strong>: <code>/api/sub-categories</code> (Frontend: <code>/sub-categories/*</code>)</li>
+<li><strong>Level 2</strong>: <code>/api/sub-sub-categories</code> (Frontend: <code>/sub-sub-categories/*</code>)</li>
+<li><strong>Level 3</strong>: <code>/api/sub-sub-sub-categories</code> (Frontend: <code>/sub-sub-sub-categories/*</code>)</li>
+<li><strong>Level 4</strong>: <code>/api/sub-sub-sub-sub-categories</code> (Frontend: <code>/sub-sub-sub-sub-categories/*</code>)</li>
+</ul>
+<h3 id="standard-category-operations">Standard Category Operations</h3>
+<h4 id="list-categories">List Categories</h4>
+<ul>
+<li><strong>Method</strong>: <code>GET</code></li>
+<li><strong>Query Parameters</strong>: <code>page</code>, <code>limit</code>, <code>search</code>, <code>parentId</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Category Name&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;slug&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;category-name&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Description&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;image&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;category.jpg&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;parent&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">null</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">null</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;productsCount&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">150</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;active&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h4 id="get-single-category">Get Single Category</h4>
+<ul>
+<li><strong>Method</strong>: <code>GET /:id</code></li>
+<li><strong>Response</strong>: Single category with children and products</li>
+</ul>
+<h4 id="create-category">Create Category</h4>
+<ul>
+<li><strong>Method</strong>: <code>POST</code></li>
+<li><strong>Request Body</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Category Name&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;slug&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;category-name&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Description&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;image&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;category.jpg&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;parentId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">null</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>...<span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h4 id="update-category">Update Category</h4>
+<ul>
+<li><strong>Method</strong>: <code>PUT /:id</code> or <code>PATCH /:id</code></li>
+</ul>
+<h4 id="delete-category">Delete Category</h4>
+<ul>
+<li><strong>Method</strong>: <code>DELETE /:id</code></li>
+</ul>
+<h3 id="get-category-tree">Get Category Tree</h3>
+<ul>
+<li><strong>API Endpoint</strong>: <code>GET /api/categories/tree</code></li>
+<li><strong>Response</strong>: Hierarchical category structure<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Clothing&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;children&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+        <span class="hljs-punctuation">{</span>
+          <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2</span><span class="hljs-punctuation">,</span>
+          <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Men&#x27;s&quot;</span><span class="hljs-punctuation">,</span>
+          <span class="hljs-attr">&quot;children&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>...<span class="hljs-punctuation">]</span>
+        <span class="hljs-punctuation">}</span>
+      <span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="order-endpoints">Order Endpoints</h2>
+<h3 id="list-orders">List Orders</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/orders</code></li>
+<li><strong>API Endpoint</strong>: <code>GET /api/orders</code></li>
+<li><strong>Query Parameters</strong>:
+<ul>
+<li><code>page</code>, <code>limit</code></li>
+<li><code>status</code>: pending, processing, shipped, delivered, cancelled</li>
+<li><code>customerId</code>: Filter by customer</li>
+<li><code>vendorId</code>: Filter by vendor</li>
+<li><code>dateFrom</code>, <code>dateTo</code>: Date range</li>
+<li><code>search</code>: Order ID or customer name</li>
+</ul>
+</li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;orderNumber&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ORD-2024-001&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;customer&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;John Doe&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;email&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;john@example.com&quot;</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;items&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;total&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">299.99</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;processing&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;paymentStatus&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;paid&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;createdAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-11-01T10:30:00Z&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;pagination&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>...<span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="get-order-details">Get Order Details</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/orders/:id/view</code></li>
+<li><strong>API Endpoint</strong>: <code>GET /api/orders/:id</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;orderNumber&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ORD-2024-001&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;customer&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>...<span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;items&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;product&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>...<span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;variation&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>...<span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;quantity&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;price&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">99.99</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;total&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">199.98</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;subtotal&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">199.98</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;shipping&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">10.00</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;tax&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">21.00</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;discount&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;total&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">230.98</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;shippingAddress&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>...<span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;billingAddress&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>...<span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;paymentMethod&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;credit_card&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;paymentStatus&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;paid&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;processing&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;statusHistory&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;pending&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;timestamp&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-11-01T10:30:00Z&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;note&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Order placed&quot;</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">]</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="update-order-status">Update Order Status</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/orders/:id/edit</code></li>
+<li><strong>API Endpoint</strong>: <code>PATCH /api/orders/:id/status</code></li>
+<li><strong>Request Body</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;shipped&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;note&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Order shipped via FedEx&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;trackingNumber&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1234567890&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="track-order">Track Order</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/orders/:id/track</code></li>
+<li><strong>API Endpoint</strong>: <code>GET /api/orders/:id/tracking</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;orderId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;trackingNumber&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1234567890&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;carrier&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;FedEx&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;currentStatus&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;in_transit&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;estimatedDelivery&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-11-05&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;history&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;picked_up&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;location&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Warehouse A&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;timestamp&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-11-01T14:00:00Z&quot;</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;in_transit&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;location&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Distribution Center B&quot;</span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">&quot;timestamp&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-11-02T08:30:00Z&quot;</span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">]</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="customer-endpoints">Customer Endpoints</h2>
+<h3 id="list-customers">List Customers</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/customers</code></li>
+<li><strong>API Endpoint</strong>: <code>GET /api/customers</code></li>
+<li><strong>Query Parameters</strong>: <code>page</code>, <code>limit</code>, <code>search</code>, <code>status</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;John Doe&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;email&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;john@example.com&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;phone&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;+1234567890&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;totalOrders&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">15</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;totalSpent&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2499.85</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;active&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;createdAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-01-15T10:00:00Z&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="get-customer-details">Get Customer Details</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/customers/:id/view</code></li>
+<li><strong>API Endpoint</strong>: <code>GET /api/customers/:id</code></li>
+<li><strong>Response</strong>: Customer details + order history + addresses</li>
+</ul>
+<h3 id="update-customer">Update Customer</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/customers/:id/edit</code></li>
+<li><strong>API Endpoint</strong>: <code>PUT /api/customers/:id</code></li>
+</ul>
+<hr>
+<h2 id="vendor-endpoints">Vendor Endpoints</h2>
+<h3 id="list-vendors">List Vendors</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/vendors</code></li>
+<li><strong>API Endpoint</strong>: <code>GET /api/vendors</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;businessName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ABC Store&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;contactPerson&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Jane Smith&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;email&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vendor@abc.com&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;phone&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;+1234567890&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;productsCount&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">250</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;totalSales&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">15000.0</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;active&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;verificationStatus&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;verified&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="get-vendor-profile">Get Vendor Profile</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/vendors/:id/view</code> or <code>/vendor-profile</code></li>
+<li><strong>API Endpoint</strong>: <code>GET /api/vendors/:id</code> or <code>GET /api/vendors/me</code></li>
+<li><strong>Response</strong>: Complete vendor profile with business details, bank info, products</li>
+</ul>
+<h3 id="update-vendor">Update Vendor</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/vendors/:id/edit</code></li>
+<li><strong>API Endpoint</strong>: <code>PUT /api/vendors/:id</code></li>
+</ul>
+<hr>
+<h2 id="content-management-endpoints">Content Management Endpoints</h2>
+<h3 id="banners">Banners</h3>
+<h4 id="desktop-banners">Desktop Banners</h4>
+<ul>
+<li><strong>Frontend Base</strong>: <code>/banners/*</code></li>
+<li><strong>API Base</strong>: <code>/api/banners</code></li>
+</ul>
+<h4 id="mobile-banners">Mobile Banners</h4>
+<ul>
+<li><strong>Frontend Base</strong>: <code>/mobilebanners/*</code></li>
+<li><strong>API Base</strong>: <code>/api/mobile-banners</code></li>
+</ul>
+<p><strong>Standard Operations</strong>:</p>
+<ul>
+<li><code>GET /</code> - List all</li>
+<li><code>GET /:id</code> - Get single</li>
+<li><code>POST /</code> - Create</li>
+<li><code>PUT /:id</code> - Update</li>
+<li><code>DELETE /:id</code> - Delete</li>
+</ul>
+<p><strong>Response Example</strong>:</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Summer Sale&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;image&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;banner.jpg&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;link&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/collections/summer&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;position&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;startDate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-06-01&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;endDate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-08-31&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;active&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<h3 id="blogs">Blogs</h3>
+<ul>
+<li><strong>Frontend Base</strong>: <code>/blogs/*</code></li>
+<li><strong>API Base</strong>: <code>/api/blogs</code></li>
+<li><strong>Response includes</strong>: Content, category, author, tags, SEO data</li>
+</ul>
+<h3 id="pages-site-pages">Pages (Site Pages)</h3>
+<ul>
+<li><strong>Frontend Base</strong>: <code>/pages/*</code></li>
+<li><strong>API Base</strong>: <code>/api/pages</code> or <code>/api/site-pages</code></li>
+<li><strong>Response includes</strong>: Page content, template, SEO data</li>
+</ul>
+<h3 id="testimonials">Testimonials</h3>
+<ul>
+<li><strong>Frontend Base</strong>: <code>/testimonials/*</code></li>
+<li><strong>API Base</strong>: <code>/api/testimonials</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;customerName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;John Doe&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;rating&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">5</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;comment&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Great service!&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;image&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;customer.jpg&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;isApproved&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="marketing-endpoints">Marketing Endpoints</h2>
+<h3 id="coupons">Coupons</h3>
+<ul>
+<li><strong>Frontend Base</strong>: <code>/coupons/*</code></li>
+<li><strong>API Base</strong>: <code>/api/coupons</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;code&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;SUMMER20&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;percentage&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;value&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">20</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;minOrderValue&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">100</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;maxDiscount&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">50</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;startDate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-06-01&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;endDate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-08-31&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;usageLimit&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1000</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;usageCount&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">450</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;active&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="collections">Collections</h3>
+<ul>
+<li><strong>Frontend Base</strong>: <code>/collections/*</code></li>
+<li><strong>API Base</strong>: <code>/api/collections</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Summer Collection&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;slug&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;summer-collection&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Hot summer picks&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;manual&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;products&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>...<span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;productsCount&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">25</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="newsletters">Newsletters</h3>
+<ul>
+<li><strong>Frontend Base</strong>: <code>/newsletters/*</code></li>
+<li><strong>API Base</strong>: <code>/api/newsletters</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;email&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;subscriber@example.com&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;subscribed&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;subscribedAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-01-15T10:00:00Z&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="site-configuration-endpoints">Site Configuration Endpoints</h2>
+<h3 id="menus">Menus</h3>
+<ul>
+<li><strong>Frontend Base</strong>: <code>/menus/*</code></li>
+<li><strong>API Base</strong>: <code>/api/menus</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Main Menu&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;location&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;header&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;items&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Shop&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;url&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/shop&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;link&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;children&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+        <span class="hljs-punctuation">{</span>
+          <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2</span><span class="hljs-punctuation">,</span>
+          <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Men&#x27;s&quot;</span><span class="hljs-punctuation">,</span>
+          <span class="hljs-attr">&quot;url&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/shop/mens&quot;</span>
+        <span class="hljs-punctuation">}</span>
+      <span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="homepage">Homepage</h3>
+<ul>
+<li><strong>Frontend Base</strong>: <code>/homepages/*</code></li>
+<li><strong>API Base</strong>: <code>/api/homepages</code></li>
+<li><strong>Response</strong>: Homepage configuration with sections</li>
+</ul>
+<h3 id="settings">Settings</h3>
+<ul>
+<li><strong>Frontend Route</strong>: <code>/settings</code></li>
+<li><strong>API Endpoint</strong>: <code>GET /api/settings</code> and <code>PUT /api/settings</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;siteName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;My Store&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;siteUrl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://mystore.com&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;contactEmail&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;info@mystore.com&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;currency&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;USD&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;timezone&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;America/New_York&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;seo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>...<span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;smtp&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>...<span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;payment&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>...<span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="product-attributes-endpoints">Product Attributes Endpoints</h2>
+<h3 id="colors">Colors</h3>
+<ul>
+<li><strong>Frontend Base</strong>: <code>/colors/*</code></li>
+<li><strong>API Base</strong>: <code>/api/colors</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Red&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;code&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;#FF0000&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;active&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="sizes">Sizes</h3>
+<ul>
+<li><strong>Frontend Base</strong>: <code>/sizes/*</code></li>
+<li><strong>API Base</strong>: <code>/api/sizes</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Large&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;code&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;L&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;sortOrder&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="variations">Variations</h3>
+<ul>
+<li><strong>Frontend Base</strong>: <code>/variations/*</code></li>
+<li><strong>API Base</strong>: <code>/api/variations</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Size-Color&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;options&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Size&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;values&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;M&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;L&quot;</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Color&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">&quot;values&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Red&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Blue&quot;</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="return--review-endpoints">Return &amp; Review Endpoints</h2>
+<h3 id="return-requests">Return Requests</h3>
+<ul>
+<li><strong>Frontend Base</strong>: <code>/return-requests/*</code></li>
+<li><strong>API Base</strong>: <code>/api/return-requests</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;orderId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;orderNumber&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ORD-2024-001&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;customer&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>...<span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;items&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>...<span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;reason&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Damaged product&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Product arrived with scratches&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;images&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;image1.jpg&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;pending&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;requestedAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-11-01T10:00:00Z&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="reviews">Reviews</h3>
+<ul>
+<li><strong>Frontend Base</strong>: <code>/reviews/*</code></li>
+<li><strong>API Base</strong>: <code>/api/reviews</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;productId&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;customer&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>...<span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;rating&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">5</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Excellent product&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;comment&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Very satisfied with the purchase&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;images&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;review1.jpg&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;isVerifiedPurchase&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;isApproved&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;createdAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-11-01T10:00:00Z&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="contact--support-endpoints">Contact &amp; Support Endpoints</h2>
+<h3 id="contacts">Contacts</h3>
+<ul>
+<li><strong>Frontend Base</strong>: <code>/contacts/*</code></li>
+<li><strong>API Base</strong>: <code>/api/contacts</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;John Doe&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;email&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;john@example.com&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;phone&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;+1234567890&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;subject&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Product inquiry&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;message&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;I have a question about...&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;pending&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;createdAt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2024-11-01T10:00:00Z&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<h3 id="franchises">Franchises</h3>
+<ul>
+<li><strong>Frontend Base</strong>: <code>/franchises/*</code></li>
+<li><strong>API Base</strong>: <code>/api/franchises</code></li>
+<li><strong>Response</strong>:<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ABC Franchise&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;location&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;New York&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;contactPerson&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Jane Smith&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;email&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;franchise@abc.com&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;status&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;active&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="common-patterns">Common Patterns</h2>
+<h3 id="pagination">Pagination</h3>
+<p>All list endpoints support pagination:</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;data&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>...<span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;pagination&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;currentPage&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;totalPages&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">10</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;totalItems&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">100</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;itemsPerPage&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">10</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;hasNextPage&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;hasPrevPage&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">false</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<h3 id="error-response">Error Response</h3>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;success&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">false</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;error&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;message&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Error message&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;code&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ERROR_CODE&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;details&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>...<span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<h3 id="file-upload">File Upload</h3>
+<p>Endpoints that accept file uploads use multipart/form-data:</p>
+<pre><code>POST /api/products
+Content-Type: multipart/form-data
+
+{
+  name: &quot;Product Name&quot;,
+  images: [File, File],
+  ...
+}
+</code></pre>
+<h3 id="search--filter">Search &amp; Filter</h3>
+<p>Most list endpoints support:</p>
+<ul>
+<li><code>search</code>: Text search</li>
+<li><code>filter[field]</code>: Filter by field</li>
+<li><code>sort</code>: Sort field</li>
+<li><code>order</code>: asc/desc</li>
+<li><code>page</code>: Page number</li>
+<li><code>limit</code>: Items per page</li>
+</ul>
+<h3 id="status-updates">Status Updates</h3>
+<p>Many resources have status updates:</p>
+<pre><code>PATCH /api/{resource}/:id/status
+{
+  &quot;status&quot;: &quot;active|inactive|pending|approved&quot;
+}
+</code></pre>
+<hr>
+<h2 id="authentication-headers">Authentication Headers</h2>
+<p>All protected endpoints require:</p>
+<pre><code>Authorization: Bearer &lt;jwt-token&gt;
+</code></pre>
+<p>Optionally:</p>
+<pre><code>X-Requested-With: XMLHttpRequest
+Content-Type: application/json
+</code></pre>
+<hr>
+<h2 id="rate-limiting">Rate Limiting</h2>
+<p>API endpoints may have rate limiting:</p>
+<ul>
+<li><strong>Limit</strong>: 100 requests per minute per IP</li>
+<li><strong>Response Headers</strong>:
+<ul>
+<li><code>X-RateLimit-Limit: 100</code></li>
+<li><code>X-RateLimit-Remaining: 95</code></li>
+<li><code>X-RateLimit-Reset: 1234567890</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>Last Updated</strong>: November 4, 2025
+<strong>Version</strong>: 1.0.0</p>
+
+            
+            
+        </body>
+        </html>
